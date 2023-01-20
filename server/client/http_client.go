@@ -45,7 +45,7 @@ func HTTPRequest(chanID uint64, request *model.Request) (resp *http.Response, re
 		if headers == nil {
 			headers = make(map[string]string)
 		}
-		headers["Content-Type"] = "application/x-www-form-urlencoded; charset=utf-8"
+		//headers["Content-Type"] = "application/x-www-form-urlencoded; charset=utf-8"
 	}
 	for key, value := range headers {
 		req.Header.Set(key, value)
@@ -68,7 +68,8 @@ func HTTPRequest(chanID uint64, request *model.Request) (resp *http.Response, re
 		if request.HTTP2 {
 			// 使用真实证书 验证证书 模拟真实请求
 			tr = &http.Transport{
-				TLSClientConfig: &tls.Config{InsecureSkipVerify: false},
+				DisableCompression: true,
+				TLSClientConfig:    &tls.Config{InsecureSkipVerify: false},
 			}
 			if err = http2.ConfigureTransport(tr); err != nil {
 				return

@@ -45,6 +45,7 @@ func createLangHttpClient(request *model.Request) *http.Client {
 	if request.HTTP2 {
 		// 使用真实证书 验证证书 模拟真实请求
 		tr = &http.Transport{
+			DisableCompression: true,
 			DialContext: (&net.Dialer{
 				Timeout:   30 * time.Second,
 				KeepAlive: 30 * time.Second,
@@ -58,6 +59,7 @@ func createLangHttpClient(request *model.Request) *http.Client {
 	} else {
 		// 跳过证书验证
 		tr = &http.Transport{
+			DisableCompression: true,
 			DialContext: (&net.Dialer{
 				Timeout:   30 * time.Second,
 				KeepAlive: 30 * time.Second,
